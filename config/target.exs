@@ -43,24 +43,13 @@ config :vintage_net,
   regulatory_domain: "US",
   config: [
     {"usb0", %{type: VintageNetDirect}},
-    {"eth0",
-     %{
-       type: VintageNetEthernet,
-       ipv4: %{method: :dhcp}
-     }},
     {"wlan0", %{type: VintageNetWiFi}}
   ]
 
 config :mdns_lite,
-  # The `host` key specifies what hostnames mdns_lite advertises.  `:hostname`
-  # advertises the device's hostname.local. For the official Nerves systems, this
-  # is "nerves-<4 digit serial#>.local".  mdns_lite also advertises
-  # "nerves.local" for convenience. If more than one Nerves device is on the
-  # network, delete "nerves" from the list.
-
   host: [:hostname, "cart"],
   ttl: 120,
-
+  excluded_ifnames: ["lo0", "lo", "usb0"],
   # Advertise the following services over mDNS.
   services: [
     %{
@@ -76,6 +65,12 @@ config :mdns_lite,
       port: 22
     },
     %{
+      name: "Web Server",
+      protocol: "http",
+      transport: "tcp",
+      port: 80
+    },
+    %{
       name: "Erlang Port Mapper Daemon",
       protocol: "epmd",
       transport: "tcp",
@@ -83,8 +78,17 @@ config :mdns_lite,
     }
   ]
 
-# Import target specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-# Uncomment to use target specific configurations
+# Use Jason for JSON parsing in Phoenix
+config :phoenix, :json_library, Jason
 
-# import_config "#{Mix.target()}.exs"
+# configure phoenix server
+config :dash, DashWeb.Endpoint,
+  url: [host: "cart.local"],
+  check_origin: false,
+  http: [port: 80],
+  secret_key_base: "PV1oONoLrbzd1hti6SaMB7RFk1pIfTYcAmiRjT0O5EI1cew3K9gQs6bu+JkLak2j",
+  render_errors: [view: DashWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: Dash.PubSub,
+  live_view: [signing_salt: "qVbU16H8"],
+  server: true,
+  cache_static_manifest: "priv/static/cache_manifest.json"

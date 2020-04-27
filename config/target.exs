@@ -42,14 +42,14 @@ config :nerves_firmware_ssh,
 config :vintage_net,
   regulatory_domain: "US",
   config: [
-    {"usb0", %{type: VintageNetDirect}},
+    #{"usb0", %{type: VintageNetDirect}},
     {"wlan0", %{type: VintageNetWiFi}}
   ]
 
 config :mdns_lite,
   host: [:hostname, "cart"],
   ttl: 120,
-  excluded_ifnames: ["lo0", "lo", "usb0"],
+  #excluded_ifnames: ["lo0", "lo", "usb0"],
   # Advertise the following services over mDNS.
   services: [
     %{

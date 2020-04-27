@@ -3,7 +3,7 @@ defmodule Cart.MixProject do
 
   @app :cart
   @version "0.1.0"
-  @all_targets [:rpi0]
+  @all_targets [:rpi0, :rpi3a]
 
   def project do
     [
@@ -53,6 +53,7 @@ defmodule Cart.MixProject do
 
       # Dependencies for specific targets
       {:nerves_system_rpi0, "~> 1.10", runtime: false, targets: :rpi0},
+      {:nerves_system_rpi3a, "~> 1.10", runtime: false, targets: :rpi3a}
     ]
   end
 

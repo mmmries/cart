@@ -6,8 +6,8 @@ defmodule Cart.Battery do
   so we can convert the ADS1115 readings back to actual battery volts
   """
 
-  # we are using a voltage divider of 68kΩ and 1MΩ
-  @voltage_ratio 1_068_000.0 / 68_000.0
+  # we are using a voltage divider of 100kΩ and 5.1kΩ
+  @voltage_ratio 105_100.0 / 5_100.0
   # we are measuring relative to GND and 3.3V
   @voltage_reference 4.096
   # ADS1115 returns a signed 16bit number, so the maximum possible value is 2^15

@@ -40,11 +40,7 @@ config :nerves_firmware_ssh,
 # Configure the network using vintage_net
 # See https://github.com/nerves-networking/vintage_net for more information
 config :vintage_net,
-  regulatory_domain: "US",
-  config: [
-    #{"usb0", %{type: VintageNetDirect}},
-    {"wlan0", %{type: VintageNetWiFi}}
-  ]
+  regulatory_domain: "US"
 
 config :mdns_lite,
   host: [:hostname, "cart"],
@@ -85,7 +81,7 @@ config :phoenix, :json_library, Jason
 config :dash, DashWeb.Endpoint,
   url: [host: "cart.local"],
   check_origin: false,
-  http: [port: 80],
+  http: [port: 8080],
   secret_key_base: "PV1oONoLrbzd1hti6SaMB7RFk1pIfTYcAmiRjT0O5EI1cew3K9gQs6bu+JkLak2j",
   render_errors: [view: DashWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Dash.PubSub,

@@ -74,9 +74,6 @@ config :mdns_lite,
     }
   ]
 
-# Use Jason for JSON parsing in Phoenix
-config :phoenix, :json_library, Jason
-
 # configure phoenix server
 config :dash, DashWeb.Endpoint,
   url: [host: "cart.local"],
@@ -88,3 +85,22 @@ config :dash, DashWeb.Endpoint,
   live_view: [signing_salt: "qVbU16H8"],
   server: true,
   cache_static_manifest: "priv/static/cache_manifest.json"
+
+config :cart, :viewport, %{
+  name: :main_viewport,
+  default_scene: {Cart.Scenes.SysInfo, nil},
+  size: {800, 480},
+  opts: [scale: 1.0],
+  drivers: [
+    %{
+      module: Scenic.Driver.Nerves.Rpi
+    },
+    %{
+      module: Scenic.Driver.Nerves.Touch,
+      opts: [
+        device: "FT5406 memory based driver",
+        calibration: {{1, 0, 0}, {1, 0, 0}}
+      ]
+    }
+  ]
+}

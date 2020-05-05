@@ -46,10 +46,17 @@ defmodule Cart.MixProject do
       {:ring_logger, "~> 0.6"},
       {:toolshed, "~> 0.2"},
       {:dash, path: "../dash"},
+      {:scenic, "~> 0.10"},
+      {:scenic_sensor, "~> 0.7"},
+
+      # Dependencies only for host
+      {:scenic_driver_glfw, "~> 0.10", targets: :host},
 
       # Dependencies for all targets except :host
       {:nerves_runtime, "~> 0.6", targets: @all_targets},
       {:nerves_pack, "~> 0.2", targets: @all_targets},
+      {:scenic_driver_nerves_rpi, "~> 0.10", targets: @all_targets},
+      {:scenic_driver_nerves_touch, "~> 0.10", targets: @all_targets},
       {:vintage_net_wizard, "~> 0.2", targets: @all_targets},
 
       # Dependencies for specific targets

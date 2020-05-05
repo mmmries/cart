@@ -10,11 +10,11 @@ defmodule Cart.Application do
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Cart.Supervisor]
+    main_viewport_config = Application.get_env(:cart, :viewport)
+
     children =
       [
-        # Children for all targets
-        # Starts a worker by calling: Cart.Worker.start_link(arg)
-        # {Cart.Worker, arg},
+        {Scenic, viewports: [main_viewport_config]}
       ] ++ children(target())
 
     Supervisor.start_link(children, opts)

@@ -23,6 +23,22 @@ config :nerves, source_date_epoch: "1587835876"
 
 config :logger, backends: [RingLogger]
 
+config :cart, :viewport, %{
+  name: :main_viewport,
+  default_scene: {Cart.Scenes.SysInfo, nil},
+  size: {800, 480},
+  opts: [scale: 1.0],
+  drivers: [
+    %{
+      module: Scenic.Driver.Glfw,
+      opts: [title: "MIX_TARGET=host, app = :my_app"]
+    }
+  ]
+}
+
+# Use Jason for JSON parsing in Phoenix
+config :phoenix, :json_library, Jason
+
 if Mix.target() != :host do
   import_config "target.exs"
 end

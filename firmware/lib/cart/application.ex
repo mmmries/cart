@@ -14,25 +14,12 @@ defmodule Cart.Application do
 
     children =
       [
+        {Scenic.Sensor, nil},
+        {Cart.BatteryMonitor, nil},
         {Scenic, viewports: [main_viewport_config]}
-      ] ++ children(target())
+      ]
 
     Supervisor.start_link(children, opts)
-  end
-
-  # List all child processes to be supervised
-  def children(:host) do
-    [
-      # Children that only run on the host
-      # Starts a worker by calling: Cart.Worker.start_link(arg)
-      # {Cart.Worker, arg},
-    ]
-  end
-
-  def children(_target) do
-    [
-      {Cart.BatteryMonitor, nil}
-    ]
   end
 
   def setup_network(:host), do: nil

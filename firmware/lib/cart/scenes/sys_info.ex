@@ -23,12 +23,18 @@ defmodule Cart.Scenes.SysInfo do
     )
     |> Scenic.FuelGauge.Components.fuel_gauge(
       %{gauge_sensor_id: :battery_level},
-      [scale: {3.0, 3.0}, translate: {80, 40}]
+      [scale: {3.0, 3.0}, translate: {200, 40}]
     )
     |> text(
       "Label",
       id: :battery_label,
-      t: {360, 400}
+      font_size: 30,
+      t: {700, 25}
+    )
+    |> Scenic.Keypad.Components.keypad(
+      buttons: [theme: :dark],
+      translate: {20, 225},
+      scale: 1.5
     )
 
   def init(_, _opts) do

@@ -47,8 +47,9 @@ defmodule Cart.MixProject do
       {:toolshed, "~> 0.2"},
       {:dash, path: "../dash"},
       {:scenic, "~> 0.10"},
-      {:scenic_sensor, "~> 0.7"},
       {:scenic_fuel_gauge, "~> 0.2"},
+      {:scenic_keypad, "~> 0.2"},
+      {:scenic_sensor, "~> 0.7"},
 
       # Dependencies only for host
       {:scenic_driver_glfw, "~> 0.10", targets: :host},

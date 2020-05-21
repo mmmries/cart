@@ -10,7 +10,7 @@ defmodule Cart.BatteryMonitor do
   else
     @battery_module Cart.Battery
   end
-  @timeout 500
+  @timeout 200
 
   @impl true
   def init(nil) do

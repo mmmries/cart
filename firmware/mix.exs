@@ -57,6 +57,7 @@ defmodule Cart.MixProject do
       # Dependencies for all targets except :host
       {:nerves_runtime, "~> 0.6", targets: @all_targets},
       {:nerves_pack, "~> 0.2", targets: @all_targets},
+      {:pigpiox, "~> 0.1", targets: @all_targets},
       {:scenic_driver_nerves_rpi, "~> 0.10", targets: @all_targets},
       {:scenic_driver_nerves_touch, "~> 0.10", targets: @all_targets},
       {:vintage_net_wizard, "~> 0.2", targets: @all_targets},

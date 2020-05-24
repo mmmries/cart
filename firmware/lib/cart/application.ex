@@ -25,7 +25,10 @@ defmodule Cart.Application do
   def setup_network(:host), do: nil
 
   def setup_network(_) do
-    VintageNetWizard.run_wizard
+    wifi_configured = VintageNet.configured_interfaces() |> Enum.any?(&(&1 =~ ~r/^wlan/))
+    if !wifi_configured do
+      VintageNetWizard.run_wizard
+    end
   end
 
   def target() do

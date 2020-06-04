@@ -4,32 +4,20 @@ defmodule Cart.Scenes.SysInfo do
 
   import Scenic.Primitives
 
-  @target System.get_env("MIX_TARGET") || "host"
-
-  @system_info """
-  MIX_TARGET: #{@target}
-  MIX_ENV: #{Mix.env()}
-  Scenic version: #{Scenic.version()}
-  """
-
   @graph Graph.build(font_size: 22, font: :roboto_mono)
-    |> group(
-      fn g ->
-        g
-        |> text("System")
-        |> text(@system_info, translate: {10, 20}, font_size: 18)
-      end,
-      t: {10, 30}
-    )
     |> Scenic.FuelGauge.Components.fuel_gauge(
       %{gauge_sensor_id: :battery_level},
-      [scale: {3.0, 3.0}, translate: {200, 40}]
+      [scale: {2.5, 2.5}, translate: {300, 40}]
     )
     |> text(
       "Label",
       id: :battery_label,
       font_size: 30,
       t: {700, 25}
+    )
+    |> Scenic.FuelGauge.Components.fuel_gauge(
+      %{gauge_sensor_id: :throttle_level},
+      [scale: {1.5, 1.5}, translate: {25, 25}]
     )
     |> Scenic.Keypad.Components.keypad(
       buttons: [theme: :dark],

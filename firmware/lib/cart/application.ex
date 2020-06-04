@@ -16,6 +16,8 @@ defmodule Cart.Application do
       [
         {Scenic.Sensor, nil},
         {Cart.BatteryMonitor, nil},
+        {Cart.ThrottleMonitor, nil},
+        {Cart.SpeedControl, nil},
         {Scenic, viewports: [main_viewport_config]}
       ]
 

@@ -10,31 +10,21 @@ defmodule Cart.Throttle do
   # ADS1115 returns a signed 16bit number, so the maximum possible value is 2^15
   @max_reading 32768.0
 
-  def new() do
-    with {:ok, bus} <- Circuits.I2C.open("i2c-1") do
-      map = %{
-        bus: bus,
-        addr: 72
-      }
-      {:ok, map}
-    end
-  end
-
   # the magnetic sensor we are using starts at 1/2 reference voltage
   # it ramps up to the reference voltage as the magnetic field gets stronger.
   # The reference voltage in this case is 3.3v and it never ramps to full strength.
   # So in this case we consider anything less than 1.7v to be 0 throttle
   # and anything over 2.8v to be 100% throttle
-  def current_throttle(state) do
-    with {:ok, voltage} <- current_voltage(state) do
-      relative = (voltage - 1.5) / 1.3
+  def current_throttle(bus) do
+    with {:ok, voltage} <- current_voltage(bus) do
+      relative = (voltage - 1.7) / 1.1
       throttle = clamp(relative)
       {:ok, throttle}
     end
   end
 
-  def current_voltage(%{bus: bus, addr: addr}) do
-    with {:ok, int} <- ADS1115.read(bus, addr, {:ain1, :gnd}, 4096) do
+  def current_voltage(bus) do
+    with {:ok, int} <- ADS1115.read(bus, 72, {:ain1, :gnd}, 4096) do
       relative = int / @max_reading
       measured_voltage = @voltage_reference * relative
       {:ok, measured_voltage}

@@ -33,8 +33,11 @@ defmodule Cart.SpeedControl do
   end
 
   # ratio is a floating point number between 0.0 and 1.0
+  defp set_speed_control(ratio) when ratio < 0.1 do
+    Pigpiox.Pwm.hardware_pwm(18, 10_000, 0)
+  end
   defp set_speed_control(ratio) do
-    duty_cycle = trunc(ratio * 1_000_000)
+    duty_cycle = 300_000 + trunc(ratio * 600_000)
     Pigpiox.Pwm.hardware_pwm(18, 10_000, duty_cycle)
   end
 end

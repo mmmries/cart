@@ -13,18 +13,8 @@ defmodule Cart.Battery do
   # ADS1115 returns a signed 16bit number, so the maximum possible value is 2^15
   @max_reading 32768.0
 
-  def new() do
-    with {:ok, bus} <- Circuits.I2C.open("i2c-1") do
-      map = %{
-        bus: bus,
-        addr: 72
-      }
-      {:ok, map}
-    end
-  end
-
-  def current_voltage(%{bus: bus, addr: addr}) do
-    with {:ok, int} <- ADS1115.read(bus, addr, {:ain0, :gnd}, 4096) do
+  def current_voltage(bus) do
+    with {:ok, int} <- ADS1115.read(bus, 72, {:ain0, :gnd}, 4096) do
       relative = int / @max_reading
       measured_voltage = @voltage_reference * relative
       inferred_voltage = measured_voltage * @voltage_ratio

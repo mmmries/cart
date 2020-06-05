@@ -10,18 +10,29 @@ defmodule Cart.Application do
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Cart.Supervisor]
-    main_viewport_config = Application.get_env(:cart, :viewport)
 
-    children =
-      [
-        {Scenic.Sensor, nil},
-        {Cart.BatteryMonitor, nil},
-        {Cart.ThrottleMonitor, nil},
-        {Cart.SpeedControl, nil},
-        {Scenic, viewports: [main_viewport_config]}
-      ]
+    Supervisor.start_link(children(target()), opts)
+  end
 
-    Supervisor.start_link(children, opts)
+  def children(:host) do
+    [
+      {Scenic.Sensor, nil},
+      {Cart.FakeMonitor, nil},
+      {Scenic, viewports: [main_viewport_config()]}
+    ]
+  end
+
+  def children(_target) do
+    [
+      {Scenic.Sensor, nil},
+      {Cart.Monitor, nil},
+      {Cart.SpeedControl, nil},
+      {Scenic, viewports: [main_viewport_config()]}
+    ]
+  end
+
+  def main_viewport_config do
+    Application.get_env(:cart, :viewport)
   end
 
   def setup_network(:host), do: nil
